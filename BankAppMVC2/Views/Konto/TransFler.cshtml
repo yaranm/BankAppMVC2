@@ -1,0 +1,24 @@
+﻿@model BankAppMVC2.ViewModels.KontoTransListaViewModel
+
+@{
+    Layout = null;
+}
+
+
+@foreach (var kund in Model.Trans)
+{
+
+
+    <tr>
+        <td>@kund.TransactionId</td>
+        <td>@kund.AccountId</td>
+        <td>@kund.Date</td>
+        <td>@kund.Type</td>
+        <td>@kund.Operation</td>
+        <td>@kund.Amount</td>
+        <td>@kund.Balance</td>
+        <td>@kund.Symbol</td>
+        <td>@kund.Bank</td>
+        <td>@kund.Account</td>
+    </tr>
+}

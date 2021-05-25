@@ -1,0 +1,109 @@
+﻿@model BankAppMVC2.ViewModels.KontoBildViewModel
+
+@{
+    ViewData["Title"] = "KontoBild";
+}
+
+
+
+
+<section class="py-5">
+    
+    <div class="card shadow mb-4">
+
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Konto</h6>
+        </div>
+        <div class="card-body">
+            <div class="row no-gutters">
+                <div class="col-md-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Kontonummer:
+                    </div>
+                    <div class="h5 mb-0 font-weight-normal text-gray-600">@Model.AccountId</div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row no-gutters">
+                <div class="col-md-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Saldo:
+                    </div>
+                    <div class="h5 mb-0 font-weight-normal text-gray-600">@Model.Balance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Konton</h6>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Trans ID</th>
+                            <th scope="col">Acount id</th>
+                            <th scope="col">Datum</th>
+                            <th scope="col">Typ</th>
+                            <th scope="col">Operation</th>
+                            <th scope="col">Belopp</th>
+                            <th scope="col">Saldo</th>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Bank</th>
+                            <th scope="col">Konto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="laddafler">
+
+                        @foreach (var kund in Model.Trans)
+                        {
+
+
+                            <tr>
+                                <td>@kund.TransactionId</td>
+                                <td>@kund.AccountId</td>
+                                <td>@kund.Date</td>
+                                <td>@kund.Type</td>
+                                <td>@kund.Operation</td>
+                                <td>@kund.Amount</td>
+                                <td>@kund.Balance</td>
+                                <td>@kund.Symbol</td>
+                                <td>@kund.Bank</td>
+                                <td>@kund.Account</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <a class="btn btn-primary" href="#" onclick="fetch20more(@Model.AccountId); return false;">Hämta 20 nästa</a>
+</section>
+@section Scripts
+{
+    <script>
+        var skip = 0;
+        function fetch20more(id) {
+            //$("#players").append('<li>En till</li>');
+
+            skip = skip + 20;
+            //$("#players").append('<li>' + skip + '</li>');
+
+            $.ajax({
+                url: "/Konto/TransFler?id=" + id + "&skip=" + skip, success: function (result) {
+                    $("#laddafler").append(result);
+                }
+            });
+
+        }
+
+
+    </script>
+}

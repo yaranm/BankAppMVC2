@@ -1,0 +1,94 @@
+﻿@model BankAppMVC2.ViewModels.KundSearchViewModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Kunder";
+}
+
+
+
+<section class="py-5">
+
+    <div class="row">
+        <div class="col-lg-12 mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="h6 text-uppercase mb-0">Kund</h3>
+                </div>
+                <div class="card-body">
+                    <a asp-controller="Kund" asp-action="New" class="btn btn-outline-primary active" role="button" aria-pressed="true">Skapa ny kund</a>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Namn</th>
+                                <th scope="col">Efternamn</th>
+                                <th scope="col">Adress</th>
+                                <th scope="col">Stad</th>
+                                <th scope="col">Personnummer</th>
+                                <th scope="col">Kundnummer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var kund in Model.Kunder)
+                            {
+                                <tr role="button" onclick="location.href = '@Url.Action("KundBild", "Kund", new { id=kund.CustomerId})'">
+                                    <td>@kund.Givenname</td>
+                                    <td>@kund.Surname</td>
+                                    <td>@kund.Streetaddress</td>
+                                    <td>@kund.City</td>
+                                    <td>@kund.NationalId</td>
+                                    <td>@kund.CustomerId</td>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        @if (User.IsInRole("Admin") || User.IsInRole("Cashier"))
+                                        {
+                                            <td><a asp-controller="Kund" asp-action="Edit" asp-route-Id="@kund.CustomerId" class="btn btn-outline-warning active" role="button" aria-pressed="true">Ändra</a></td>
+                                            <td><a asp-controller="Kund" asp-action="Delete" asp-route-Id="@kund.CustomerId" class="btn btn-outline-dark active" role="button" aria-pressed="true">Radera</a></td>
+
+                                        }
+                                    }
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                    <div>
+                        <tr>
+                            <td>
+                                @if (Model.Page > 1)
+                                {
+                                    <a class="btn btn-primary"
+                                       asp-controller="Kund"
+                                       asp-action="Search"
+                                       asp-route-page="@(Model.Page - 1)"
+                                       asp-route-q="@Model.q">
+
+                                        Tillbaka
+                                    </a>
+
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-primary"
+                                   asp-controller="Kund"
+                                   asp-action="Search"
+                                   asp-route-page="@(Model.Page + 1)"
+                                   asp-route-q="@Model.q">
+
+                                    Nästa
+                                </a>
+                            </td>
+                        </tr>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

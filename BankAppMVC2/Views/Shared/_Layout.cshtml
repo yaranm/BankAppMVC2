@@ -1,0 +1,154 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BankApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/sb-admin-2.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-area="" asp-controller="Home" asp-action="Index">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">BankApp</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Privacy</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Kund" asp-action="Search">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Kund lista</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                Transaktioner
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Insattning" asp-action="New">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Insättning</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Uttag" asp-action="NewUttag">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Uttag</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Overforing" asp-action="NewOverforing">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Överföring</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+
+
+        </ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-controller="Kund" asp-action="Search" method="get">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-controller="Kund" asp-action="KundBild">
+                        <div class="input-group">
+                            <input type="number" name="id" class="form-control bg-light border-0 small" placeholder="Mata in kundnummer..."
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <partial name="_LoginPartial" />
+                </nav>
+
+                <div class="container-fluid">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - BankApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/sb-admin-2.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
